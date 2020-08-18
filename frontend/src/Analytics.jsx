@@ -80,6 +80,7 @@ const Analytics = () => {
 
     const location = useLocation();
     React.useEffect(() => {
+        // TODO: Add metadata to events
         pushEvent({
             pathname: location.pathname
         });
