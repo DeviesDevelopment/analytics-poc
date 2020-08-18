@@ -7,12 +7,28 @@ Resources:
       Handler: index.handler
       Runtime: nodejs12.x
       Policies: AmazonDynamoDBFullAccess
+      Environment:
+        Variables:
+          DynamoTableName: !Ref AnalyticsTable
       Events:
         HttpPost:
           Type: Api
           Properties:
             Path: '/analytics'
             Method: post
+
+  AnalyticsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
 
 Outputs:
   BaseUrl:
