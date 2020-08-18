@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, Route, Switch } from 'react-router-dom';
-import Category from './Category';
+import TrustStore from './TrustStore';
 import Analytics from './Analytics';
 
 const App = () => {
@@ -9,17 +9,21 @@ const App = () => {
     <div>
       <nav className="navbar navbar-light">
         <ul className="nav navbar-nav">
-          <li><Link to="/">Homes</Link></li>
-          <li><Link to="/products">Products</Link></li>
-          <li><Link to="/category">Category</Link></li>
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/api-docs">API Docs</Link></li>
+          <li><Link to="/trust-store">Trust Store</Link></li>
+          <li><Link to="/vehicle-data">Vehicle Data</Link></li>
+          <li><Link to="/vehicle-gate-log">Vehicle Gate Log</Link></li>
         </ul>
       </nav>
 
       <Analytics />
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route path="/products" component={Products} />
-        <Route path="/category" component={Category} />
+        <Route path="/api-docs" component={ApiDocs} />
+        <Route path="/trust-store" component={TrustStore} />
+        <Route path="/vehicle-data" component={VehicleData} />
+        <Route path="/vehicle-gate-log" component={VehicleGateLog} />
       </Switch>
 
     </div>
@@ -28,14 +32,26 @@ const App = () => {
 
 const Home = (props) => (
   <div>
-    <h2>Home {console.log(props)}</h2>
+    <h2>Home</h2>
+    <p>Welcome to the fake DPAP!</p>
   </div>
 )
 
-
-const Products = () => (
+const ApiDocs = () => (
   <div>
-    <h2>Products</h2>
+    <h2>API Docs</h2>
+  </div>
+)
+
+const VehicleGateLog = () => (
+  <div>
+    <h2>Vehicle Gate Log</h2>
+  </div>
+)
+
+const VehicleData = () => (
+  <div>
+    <h2>Vehicle Data</h2>
   </div>
 )
 
