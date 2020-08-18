@@ -24,20 +24,23 @@ const Analytics = () => {
 
         // TODO: I also add an "end session" event to the data here
         const data = eventsRef.current;
-        const url = "TODO: TBD";
+        // TODO: URL as config?
+        const url = "https://dvhbj9at24.execute-api.eu-west-1.amazonaws.com/Prod/analytics";
 
         const { vendor } = window.navigator;
 
         // https://bugs.webkit.org/show_bug.cgi?id=188329
         // Safari bug is fixed but not yet released. When that happens, will need to check safari version also
         if (window.navigator.sendBeacon && !~vendor.indexOf('Apple')) {
-            // try to send the beacon
-            const beacon = window.navigator.sendBeacon(url, data);
+            console.log('try to send the beacon');
+            const beacon = window.navigator.sendBeacon(url, JSON.stringify(data));
             if (beacon) {
-                // if it failed to queue, (some adblockers will block all beacons), then try the other way
+                console.log('Successfully sent beacon');
                 return;
             }
         }
+        // if it failed to queue, (some adblockers will block all beacons), then try the other way
+        console.log('beacon failed');
 
         // Instead, send an async request
         // Except for iOS :(
@@ -45,7 +48,7 @@ const Analytics = () => {
         const request = new XMLHttpRequest();
         request.open('POST', url, async); // 'false' makes the request synchronous
         request.setRequestHeader('Content-Type', 'application/json');
-        request.send(data);
+        request.send(JSON.stringify(data));
 
         // Synchronous request cause a slight delay in UX as the browser waits for the response
         // I've found it more performant to do an async call and use the following hack to keep the loop open while waiting
