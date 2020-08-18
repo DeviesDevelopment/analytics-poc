@@ -9,3 +9,7 @@ A POC for collecting user analytics in DPAP from the innovation days.
     npm install
 
     npm start
+
+## References
+
+https://www.pcmaffey.com/roll-your-own-analytics/
