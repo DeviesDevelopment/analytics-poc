@@ -4,7 +4,7 @@ var AWS = require('aws-sdk');
 //var dynamo = new AWS.DynamoDB.DocumentClient();
 
 exports.handler = function(event, context, callback) {
-    console.log('Received event:', JSON.stringify(event, null, 2));
+    console.log('Received body:', JSON.stringify(event.body, null, 2));
 
     let responseBody = {
         message: "success"
