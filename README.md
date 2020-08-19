@@ -2,6 +2,8 @@
 
 A POC for collecting user analytics in DPAP (or any other React app), developed during the innovation days.
 
+Live demo: http://dpap-analytics-poc.s3-website-eu-west-1.amazonaws.com/
+
 ## How it works
 
 Every time the path changes, an event is stored in the Analytics component. When the browser session ends, all the collected events are sent (together with some metadata) in a single request to a lambda endpoint. The lambda then parses the data and saves it to a DynamoDB table.
@@ -16,6 +18,14 @@ This means that for every user session, only a single request is sent to the ana
 
     npm start
 
+## Deploying frontend
+
+Publish to S3 bucket:
+
+    cd frontend
+    npm run build
+    aws2 s3 sync build s3://dpap-analytics-poc --profile vwdpeu-iot --region eu-west-1 --acl public-read
+
 ## Deploying backend
 
 Prerequisites:
@@ -25,6 +35,7 @@ Prerequisites:
 
 Package and deploy changes:
 
+    cd backend
     sam package \
         --template-file template.yml \
         --output-template-file packaged.yml \
@@ -40,7 +51,7 @@ Package and deploy changes:
 
 Get the base URL for the API:
 
-    aws cloudformation describe-stacks \
+    aws2 cloudformation describe-stacks \
         --stack-name dpap-analytics-poc \
         --profile vwdpeu-iot \
         --region eu-west-1 \
