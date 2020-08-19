@@ -37,6 +37,7 @@ const Home = (props) => (
   <div>
     <h2>Home</h2>
     <p>Welcome to the fake DPAP!</p>
+    <p>This page collects usage behavior data.<br />Go to <strong>User Analytics</strong> tab to view.</p>
   </div>
 )
 
