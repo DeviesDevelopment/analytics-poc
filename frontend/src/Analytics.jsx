@@ -28,7 +28,7 @@ const Analytics = () => {
         };
 
         // TODO: URL as config?
-        const url = "https://dvhbj9at24.execute-api.eu-west-1.amazonaws.com/Prod/analytics";
+        const url = "https://43ct1offkf.execute-api.eu-west-1.amazonaws.com/Prod/analytics";
 
         const { vendor } = window.navigator;
 
