@@ -6,7 +6,7 @@ Live demo: http://dpap-analytics-poc.s3-website-eu-west-1.amazonaws.com/
 
 ## How it works
 
-Every time the path changes, an event is stored in the Analytics component. When the browser session ends, all the collected events are sent (together with some metadata) in a single request to a lambda endpoint. The lambda then parses the data and saves it to a DynamoDB table.
+Every time the path changes, an event is stored in the [Analytics](frontend/src/Analytics.jsx) component. When the browser session ends, all the collected events are sent (together with some metadata) in a single request to a lambda endpoint. The lambda then parses the data and saves it to a DynamoDB table.
 
 This means that for every user session, only a single request is sent to the analytics endpoint, making this approach very lightweight.
 
@@ -18,7 +18,13 @@ This means that for every user session, only a single request is sent to the ana
 
     npm start
 
-## Deploying frontend
+## Deploy frontend
+
+Prerequisites:
+* Install [aws](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv1.html) or [aws2](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) CLI tool.
+* Make sure the bucket `dpap-analytics-poc` exists.
+* Turn off "Block all public access" for the S3 bucket (under Permissions).
+* Turn on "Static website hosting" for the S3 bucket (under Properties). Enter `index.html` as both Index document and Error document.
 
 Publish to S3 bucket:
 
@@ -26,7 +32,7 @@ Publish to S3 bucket:
     npm run build
     aws2 s3 sync build s3://dpap-analytics-poc --profile vwdpeu-iot --region eu-west-1 --acl public-read
 
-## Deploying backend
+## Deploy backend
 
 Prerequisites:
 * Install [aws](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv1.html) or [aws2](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) CLI tool.
