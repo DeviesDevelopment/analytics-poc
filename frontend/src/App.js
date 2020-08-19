@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, Route, Switch } from 'react-router-dom';
 import TrustStore from './TrustStore';
 import Analytics from './Analytics';
+import UserAnalytics from './UserAnalytics';
 
 const App = () => {
 
@@ -14,6 +15,7 @@ const App = () => {
           <li><Link to="/trust-store">Trust Store</Link></li>
           <li><Link to="/vehicle-data">Vehicle Data</Link></li>
           <li><Link to="/vehicle-gate-log">Vehicle Gate Log</Link></li>
+          <li><Link to="/user-analytics">User Analytics</Link></li>
         </ul>
       </nav>
 
@@ -24,6 +26,7 @@ const App = () => {
         <Route path="/trust-store" component={TrustStore} />
         <Route path="/vehicle-data" component={VehicleData} />
         <Route path="/vehicle-gate-log" component={VehicleGateLog} />
+        <Route path="/user-analytics" component={UserAnalytics} />
       </Switch>
 
     </div>
