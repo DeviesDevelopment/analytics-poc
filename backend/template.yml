@@ -6,7 +6,9 @@ Resources:
     Properties:
       Handler: index.postAnalytics
       Runtime: nodejs12.x
-      Policies: AmazonDynamoDBFullAccess
+      Policies:
+        - DynamoDBWritePolicy:
+            TableName: !Ref AnalyticsTable
       Environment:
         Variables:
           DynamoTableName: !Ref AnalyticsTable
@@ -22,7 +24,9 @@ Resources:
     Properties:
       Handler: index.getAnalytics
       Runtime: nodejs12.x
-      Policies: AmazonDynamoDBReadOnlyAccess
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: !Ref AnalyticsTable
       Environment:
         Variables:
           DynamoTableName: !Ref AnalyticsTable
