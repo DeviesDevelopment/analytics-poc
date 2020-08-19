@@ -3,6 +3,7 @@ import { Link, Route, Switch } from 'react-router-dom';
 import TrustStore from './TrustStore';
 import Analytics from './Analytics';
 import UserAnalytics from './UserAnalytics';
+import './index.css';
 
 const App = () => {
 
@@ -44,18 +45,21 @@ const Home = (props) => (
 const ApiDocs = () => (
   <div>
     <h2>API Docs</h2>
+    <p>API Docs stuff</p>
   </div>
 )
 
 const VehicleGateLog = () => (
   <div>
     <h2>Vehicle Gate Log</h2>
+    <p>Vehicle Gate Log stuff</p>
   </div>
 )
 
 const VehicleData = () => (
   <div>
     <h2>Vehicle Data</h2>
+    <p>Vehicle Data stuff</p>
   </div>
 )
 
