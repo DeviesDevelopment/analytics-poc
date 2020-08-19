@@ -19,15 +19,20 @@ exports.handler = async function(request, context, callback) {
 
     events[events.length - 1].duration = sessionEnd - events[events.length - 1].timestamp;
 
+    for (let i = 0; i < events.length; i++) {
+        events[i].timestamp = formatDateFull(events[i].timestamp);
+    }
+
+
     var params = {
         TableName: process.env.DynamoTableName,
         Item: {
-            'date': formatDate(sessionEnd),
+            'date': formatDateShort(sessionEnd),
             'timestamp-unique': `${sessionEnd}-${randomId()}`,
             'events': events,
             'pageLoad': pageLoad,
             'browser': userAgent,
-            'sessionEnd': sessionEnd
+            'sessionEnd': formatDateFull(sessionEnd)
         }
     };
 
@@ -51,7 +56,11 @@ function randomId() {
     });
 }
 
-function formatDate(timestamp) {
+function formatDateFull(timestamp) {
+    return new Date(timestamp).toISOString();
+}
+
+function formatDateShort(timestamp) {
     const d = new Date(timestamp);
     return d.getFullYear()
     + '-'
