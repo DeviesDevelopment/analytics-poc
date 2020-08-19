@@ -23,7 +23,12 @@ const Analytics = () => {
         skip = true;
 
         // TODO: I also add an "end session" event to the data here
-        const data = eventsRef.current;
+
+        const data = {
+            events: eventsRef.current,
+            pageLoad: window.performance.timing.loadEventEnd - window.performance.timing.responseEnd
+        };
+
         // TODO: URL as config?
         const url = "https://dvhbj9at24.execute-api.eu-west-1.amazonaws.com/Prod/analytics";
 
