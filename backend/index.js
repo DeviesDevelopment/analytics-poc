@@ -11,6 +11,13 @@ exports.handler = async function(request, context, callback) {
     const events = body.events;
     const pageLoad = body.pageLoad;
     const userAgent = request.headers["User-Agent"];
+    const sessionEnd = Date.now();
+
+    for (let i = 0; i < events.length - 1; i++) {
+        events[i].duration = events[i+1].timestamp - events[i].timestamp;
+    }
+
+    events[events.length - 1].duration = sessionEnd - events[events.length - 1].timestamp;
 
     var params = {
         TableName: process.env.DynamoTableName,
@@ -19,7 +26,7 @@ exports.handler = async function(request, context, callback) {
             'events': events,
             'pageLoad': pageLoad,
             'browser': userAgent,
-            'sessionEnd': Date.now()
+            'sessionEnd': sessionEnd
         }
     };
 
