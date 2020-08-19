@@ -1,6 +1,12 @@
 # DPAP Analytics POC
 
-A POC for collecting user analytics in DPAP from the innovation days.
+A POC for collecting user analytics in DPAP (or any other React app), developed during the innovation days.
+
+## How it works
+
+Every time the path changes, an event is stored in the Analytics component. When the browser session ends, all the collected events are sent (together with some metadata) in a single request to a lambda endpoint. The lambda then parses the data and saves it to a DynamoDB table.
+
+This means that for every user session, only a single request is sent to the analytics endpoint, making this approach very lightweight.
 
 ## Launch frontend
 
@@ -12,16 +18,25 @@ A POC for collecting user analytics in DPAP from the innovation days.
 
 ## Deploying backend
 
-Pre-requisites:
-* Install aws or aws2 CLI tool.
-* Install sam CLI tool.
+Prerequisites:
+* Install [aws](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv1.html) or [aws2](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) CLI tool.
+* Install [sam](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html) CLI tool.
 * Make sure the bucket `dpap-analytics-poc` exists.
 
 Package and deploy changes:
 
-    sam package --template-file template.yml --output-template-file packaged.yml --s3-bucket dpap-analytics-poc --profile vwdpeu-iot
+    sam package \
+        --template-file template.yml \
+        --output-template-file packaged.yml \
+        --s3-bucket dpap-analytics-poc \
+        --profile vwdpeu-iot
 
-    sam deploy --template-file packaged.yml --stack-name dpap-analytics-poc  --capabilities CAPABILITY_IAM --profile vwdpeu-iot --region eu-west-1 
+    sam deploy \
+        --template-file packaged.yml \
+        --stack-name dpap-analytics-poc \
+        --capabilities CAPABILITY_IAM \
+        --profile vwdpeu-iot \
+        --region eu-west-1
 
 Get the base URL for the API:
 
