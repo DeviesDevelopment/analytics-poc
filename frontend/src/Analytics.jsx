@@ -22,8 +22,6 @@ const Analytics = () => {
         }
         skip = true;
 
-        // TODO: I also add an "end session" event to the data here
-
         const data = {
             events: eventsRef.current,
             pageLoad: window.performance.timing.loadEventEnd - window.performance.timing.responseEnd
@@ -63,10 +61,7 @@ const Analytics = () => {
             return;
         }
 
-        // Latency calculated from navigator.performance
-        // TODO: use latency?
-        const latency = data.latency || 0;
-        const t = Date.now() + Math.max(300, latency + 200);
+        const t = Date.now() + 300;
         while (Date.now() < t) {
             // postpone the JS loop for 300ms so that the request can complete
             // a hack necessary for Firefox and Safari refresh / back button
@@ -85,9 +80,9 @@ const Analytics = () => {
 
     const location = useLocation();
     React.useEffect(() => {
-        // TODO: Add metadata to events
         pushEvent({
-            pathname: location.pathname
+            pathname: location.pathname,
+            timestamp: Date.now()
         });
         console.log('Location changed', location.pathname);
     }, [location]);
