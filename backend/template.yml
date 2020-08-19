@@ -4,7 +4,7 @@ Resources:
   SaveAnalyticsLambda:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: index.handler
+      Handler: index.postAnalytics
       Runtime: nodejs12.x
       Policies: AmazonDynamoDBFullAccess
       Environment:
@@ -14,19 +14,40 @@ Resources:
         HttpPost:
           Type: Api
           Properties:
+            RestApiId: !Ref AnalyticsApiGateway
             Path: '/analytics'
             Method: post
+  GetAnalyticsLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.getAnalytics
+      Runtime: nodejs12.x
+      Policies: AmazonDynamoDBReadOnlyAccess
+      Environment:
+        Variables:
+          DynamoTableName: !Ref AnalyticsTable
+      Events:
+        HttpPost:
+          Type: Api
+          Properties:
+            RestApiId: !Ref AnalyticsApiGateway
+            Path: '/analytics'
+            Method: get
+  AnalyticsApiGateway:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Prod
 
   AnalyticsTable:
     Type: AWS::DynamoDB::Table
     Properties:
       AttributeDefinitions:
-        - AttributeName: date
+        - AttributeName: datekey
           AttributeType: S
         - AttributeName: timestamp-unique
           AttributeType: S
       KeySchema:
-        - AttributeName: date
+        - AttributeName: datekey
           KeyType: HASH
         - AttributeName: timestamp-unique
           KeyType: RANGE
@@ -37,4 +58,4 @@ Resources:
 Outputs:
   BaseUrl:
     Description: "API Gateway endpoint URL for Prod stage for API Gateway Multi-Origin CORS function"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+    Value: !Sub "https://${AnalyticsApiGateway}.execute-api.${AWS::Region}.amazonaws.com/Prod/"

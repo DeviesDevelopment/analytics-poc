@@ -1,9 +1,9 @@
 var AWS = require('aws-sdk');
-AWS.config.update({region: process.env.AWS_REGION});
+AWS.config.update({ region: process.env.AWS_REGION });
 
 var ddb = new AWS.DynamoDB.DocumentClient();
 
-exports.handler = async function(request, context, callback) {
+exports.postAnalytics = async function(request, context, callback) {
     console.log('Received body:', JSON.stringify(request.body, null, 2));
 
     const body = JSON.parse(request.body);
@@ -14,7 +14,7 @@ exports.handler = async function(request, context, callback) {
     const sessionEnd = Date.now();
 
     for (let i = 0; i < events.length - 1; i++) {
-        events[i].duration = events[i+1].timestamp - events[i].timestamp;
+        events[i].duration = events[i + 1].timestamp - events[i].timestamp;
     }
 
     events[events.length - 1].duration = sessionEnd - events[events.length - 1].timestamp;
@@ -24,10 +24,10 @@ exports.handler = async function(request, context, callback) {
     }
 
 
-    var params = {
+    const params = {
         TableName: process.env.DynamoTableName,
         Item: {
-            'date': formatDateShort(sessionEnd),
+            'datekey': formatDateShort(sessionEnd),
             'timestamp-unique': `${sessionEnd}-${randomId()}`,
             'events': events,
             'pageLoad': pageLoad,
@@ -49,6 +49,36 @@ exports.handler = async function(request, context, callback) {
     });
 };
 
+exports.getAnalytics = async function(request, context, callback) {
+    const params = {
+        TableName: process.env.DynamoTableName,
+        KeyConditionExpression: 'datekey = :dkey',
+        ExpressionAttributeValues: {
+            ':dkey': formatDateShort(new Date().getTime()),
+        }
+    };
+    return new Promise((resolve, reject) => {
+        ddb.query(params, function(err, data) {
+            if (err) {
+                console.log("Error", err);
+                reject(Error(err));
+            } else {
+                console.log("Success", data);
+                resolve({
+                    statusCode: 200,
+                    body: JSON.stringify(data['Items']
+                        .map(item => ({
+                            sessionEnd: item.sessionEnd,
+                            events: item.events,
+                            pageLoad: item.pageLoad,
+                            browser: item.browser
+                        })))
+                });
+            }
+        });
+    })
+}
+
 function randomId() {
     return 'xxxxxxxx'.replace(/[xy]/g, function(c) {
         var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
@@ -63,8 +93,8 @@ function formatDateFull(timestamp) {
 function formatDateShort(timestamp) {
     const d = new Date(timestamp);
     return d.getFullYear()
-    + '-'
-    + ('0' + (d.getMonth() + 1)).slice(-2)
-    + '-'
-    + ('0' + d.getDate()).slice(-2);
+        + '-'
+        + ('0' + (d.getMonth() + 1)).slice(-2)
+        + '-'
+        + ('0' + d.getDate()).slice(-2);
 }
