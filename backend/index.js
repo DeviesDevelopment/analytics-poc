@@ -3,7 +3,7 @@ AWS.config.update({ region: process.env.AWS_REGION });
 
 var ddb = new AWS.DynamoDB.DocumentClient();
 
-exports.postAnalytics = async function(request, context, callback) {
+exports.postAnalytics = async function (request, context, callback) {
     console.log('Received body:', JSON.stringify(request.body, null, 2));
 
     const body = JSON.parse(request.body);
@@ -37,7 +37,7 @@ exports.postAnalytics = async function(request, context, callback) {
     };
 
     return new Promise((resolve, reject) => {
-        ddb.put(params, function(err, data) {
+        ddb.put(params, function (err, data) {
             if (err) {
                 console.log("Error", err);
                 reject(Error(err));
@@ -49,7 +49,7 @@ exports.postAnalytics = async function(request, context, callback) {
     });
 };
 
-exports.getAnalytics = async function(request, context, callback) {
+exports.getAnalytics = async function (request, context, callback) {
     const params = {
         TableName: process.env.DynamoTableName,
         KeyConditionExpression: 'datekey = :dkey',
@@ -58,7 +58,7 @@ exports.getAnalytics = async function(request, context, callback) {
         }
     };
     return new Promise((resolve, reject) => {
-        ddb.query(params, function(err, data) {
+        ddb.query(params, function (err, data) {
             if (err) {
                 console.log("Error", err);
                 reject(Error(err));
@@ -66,6 +66,11 @@ exports.getAnalytics = async function(request, context, callback) {
                 console.log("Success", data);
                 resolve({
                     statusCode: 200,
+                    headers: {
+                        "Access-Control-Allow-Headers": "*",
+                        "Access-Control-Allow-Origin": "*",
+                        "Access-Control-Allow-Methods": "GET,POST,OPTIONS"
+                    },
                     body: JSON.stringify(data['Items']
                         .map(item => ({
                             sessionEnd: item.sessionEnd,
@@ -80,7 +85,7 @@ exports.getAnalytics = async function(request, context, callback) {
 }
 
 function randomId() {
-    return 'xxxxxxxx'.replace(/[xy]/g, function(c) {
+    return 'xxxxxxxx'.replace(/[xy]/g, function (c) {
         var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
         return v.toString(16);
     });
