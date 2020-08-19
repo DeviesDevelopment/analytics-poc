@@ -3,14 +3,23 @@ AWS.config.update({region: process.env.AWS_REGION});
 
 var ddb = new AWS.DynamoDB.DocumentClient();
 
-exports.handler = async function(event, context, callback) {
-    console.log('Received body:', JSON.stringify(event.body, null, 2));
+exports.handler = async function(request, context, callback) {
+    console.log('Received body:', JSON.stringify(request.body, null, 2));
+
+    const body = JSON.parse(request.body);
+
+    const events = body.events;
+    const pageLoad = body.pageLoad;
+    const userAgent = request.headers["User-Agent"];
 
     var params = {
         TableName: process.env.DynamoTableName,
         Item: {
             'id': uuidv4(),
-            'events': JSON.parse(event.body)
+            'events': events,
+            'pageLoad': pageLoad,
+            'browser': userAgent,
+            'sessionEnd': Date.now()
         }
     };
 
