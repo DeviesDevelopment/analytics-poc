@@ -22,7 +22,8 @@ exports.handler = async function(request, context, callback) {
     var params = {
         TableName: process.env.DynamoTableName,
         Item: {
-            'id': uuidv4(),
+            'date': formatDate(sessionEnd),
+            'timestamp-unique': `${sessionEnd}-${randomId()}`,
             'events': events,
             'pageLoad': pageLoad,
             'browser': userAgent,
@@ -43,9 +44,18 @@ exports.handler = async function(request, context, callback) {
     });
 };
 
-function uuidv4() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+function randomId() {
+    return 'xxxxxxxx'.replace(/[xy]/g, function(c) {
         var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
         return v.toString(16);
     });
+}
+
+function formatDate(timestamp) {
+    const d = new Date(timestamp);
+    return d.getFullYear()
+    + '-'
+    + ('0' + (d.getMonth() + 1)).slice(-2)
+    + '-'
+    + ('0' + d.getDate()).slice(-2);
 }

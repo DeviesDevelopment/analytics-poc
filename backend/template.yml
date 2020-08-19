@@ -21,11 +21,15 @@ Resources:
     Type: AWS::DynamoDB::Table
     Properties:
       AttributeDefinitions:
-        - AttributeName: id
+        - AttributeName: date
+          AttributeType: S
+        - AttributeName: timestamp-unique
           AttributeType: S
       KeySchema:
-        - AttributeName: id
+        - AttributeName: date
           KeyType: HASH
+        - AttributeName: timestamp-unique
+          KeyType: RANGE
       ProvisionedThroughput:
         ReadCapacityUnits: 5
         WriteCapacityUnits: 5
