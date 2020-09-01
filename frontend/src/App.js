@@ -43,6 +43,7 @@ const Home = (props) => (
       details about your session will be sent to our backend and stored in database.
       If you come back here again you will therefore notice that the numbers have changed.
       No personal data is gathered this way.</p>
+    <p>Read more in this blog post: <a href="https://sundin.github.io/implementation/2020/09/01/analytics-poc.html">https://sundin.github.io/implementation/2020/09/01/analytics-poc.html</a></p>
     <p>Source code available here: <a href="https://github.com/DeviesDevelopment/analytics-poc">https://github.com/DeviesDevelopment/analytics-poc</a></p>
   </div>
 );

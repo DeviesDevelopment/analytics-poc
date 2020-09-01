@@ -4,6 +4,8 @@ A POC for collecting user behaviour data from any React app using no third-party
 
 Live demo: http://devies-analytics-poc.s3-website-eu-west-1.amazonaws.com/
 
+Read more about this experiment in [this blog post](https://sundin.github.io/implementation/2020/09/01/analytics-poc.html).
+
 ## How it works
 
 Every time the path changes, an event is stored in the [Analytics](frontend/src/Analytics.jsx) component. When the browser session ends, all the collected events are sent (together with some metadata) in a single request to a lambda endpoint. The lambda then parses the data and saves it to a DynamoDB table.
@@ -79,6 +81,7 @@ Configuration:
 ## References
 
 * Idea and some of the implementation taken from here: https://www.pcmaffey.com/roll-your-own-analytics/
+* More details about this experiment can be found in my [blog post](https://sundin.github.io/implementation/2020/09/01/analytics-poc.html).
 
 ## Authors
 
