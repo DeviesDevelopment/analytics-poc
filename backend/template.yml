@@ -51,12 +51,12 @@ Resources:
     Type: AWS::DynamoDB::Table
     Properties:
       AttributeDefinitions:
-        - AttributeName: datekey
+        - AttributeName: monthkey
           AttributeType: S
         - AttributeName: timestamp-unique
           AttributeType: S
       KeySchema:
-        - AttributeName: datekey
+        - AttributeName: monthkey
           KeyType: HASH
         - AttributeName: timestamp-unique
           KeyType: RANGE

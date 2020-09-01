@@ -27,7 +27,7 @@ exports.postAnalytics = async function (request, context, callback) {
     const params = {
         TableName: process.env.DynamoTableName,
         Item: {
-            'datekey': formatDateShort(sessionEnd),
+            'monthkey': formatDateShort(sessionEnd),
             'timestamp-unique': `${sessionEnd}-${randomId()}`,
             'events': events,
             'pageLoad': pageLoad,
@@ -52,7 +52,7 @@ exports.postAnalytics = async function (request, context, callback) {
 exports.getAnalytics = async function (request, context, callback) {
     const params = {
         TableName: process.env.DynamoTableName,
-        KeyConditionExpression: 'datekey = :dkey',
+        KeyConditionExpression: 'monthkey = :dkey',
         ExpressionAttributeValues: {
             ':dkey': formatDateShort(new Date().getTime()),
         }
@@ -81,7 +81,7 @@ exports.getAnalytics = async function (request, context, callback) {
                 });
             }
         });
-    })
+    });
 }
 
 function randomId() {
@@ -97,9 +97,5 @@ function formatDateFull(timestamp) {
 
 function formatDateShort(timestamp) {
     const d = new Date(timestamp);
-    return d.getFullYear()
-        + '-'
-        + ('0' + (d.getMonth() + 1)).slice(-2)
-        + '-'
-        + ('0' + d.getDate()).slice(-2);
+    return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2);
 }

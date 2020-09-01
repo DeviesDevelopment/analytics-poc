@@ -4,7 +4,7 @@ const UserAnalytics = () => {
 
     const [analytics, setAnalytics] = useState([]);
     useEffect(() => {
-        fetch('https://43ct1offkf.execute-api.eu-west-1.amazonaws.com/Prod/analytics')
+        fetch(REACT_APP_BACKEND_URL + '/analytics')
             .then(response => response.json())
             .then(response => {
                 setAnalytics(response);

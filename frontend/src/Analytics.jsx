@@ -27,8 +27,7 @@ const Analytics = () => {
             pageLoad: window.performance.timing.loadEventEnd - window.performance.timing.responseEnd
         };
 
-        // TODO: URL as config?
-        const url = "https://43ct1offkf.execute-api.eu-west-1.amazonaws.com/Prod/analytics";
+        const url = process.env.REACT_APP_BACKEND_URL + "/analytics";
 
         const { vendor } = window.navigator;
 
