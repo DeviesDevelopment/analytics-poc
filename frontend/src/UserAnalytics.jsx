@@ -4,7 +4,7 @@ const UserAnalytics = () => {
 
     const [analytics, setAnalytics] = useState([]);
     useEffect(() => {
-        fetch(REACT_APP_BACKEND_URL + '/analytics')
+        fetch(process.env.REACT_APP_BACKEND_URL + '/analytics')
             .then(response => response.json())
             .then(response => {
                 setAnalytics(response);
