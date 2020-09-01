@@ -17,7 +17,7 @@ const UserAnalytics = () => {
 
             <p>The information available here can be used to find out which pages your users like and/or are easy to find.</p>
 
-            <p>Most visited pages:</p>
+            <p>Most visited pages this month:</p>
             <ul>
                 {mostVisitedPage(analytics).map(page => <li key={page.path}>{page.path}: {page.visits}</li>)}
             </ul>

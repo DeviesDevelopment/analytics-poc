@@ -15,7 +15,7 @@ const UserAnalytics = () => {
         <div>
             <h2>Time Spent Per Page</h2>
 
-            <p>Average time spent per page:</p>
+            <p>Average time spent per page this month:</p>
             <ul>
                 {timeSpentPerPage(analytics).map(page => <li key={page.path}>{page.path}: {page.duration}</li>)}
             </ul>
