@@ -1,8 +1,8 @@
-# Analytics POC
+# DPAP Analytics POC
 
-A POC for collecting user behaviour data in any React app without using any third-party libraries.
+A POC for collecting user analytics in DPAP (or any other React app), developed during the innovation days.
 
-Live demo: http://analytics-poc.s3-website-eu-west-1.amazonaws.com/
+Live demo: http://dpap-analytics-poc.s3-website-eu-west-1.amazonaws.com/
 
 ## How it works
 
@@ -22,7 +22,7 @@ This means that for every user session, only a single request is sent to the ana
 
 Prerequisites:
 * Install [aws](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv1.html) or [aws2](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) CLI tool.
-* Make sure the bucket `analytics-poc` exists.
+* Make sure the bucket `dpap-analytics-poc` exists.
 * Turn off "Block all public access" for the S3 bucket (under Permissions).
 * Turn on "Static website hosting" for the S3 bucket (under Properties). Enter `index.html` as both Index document and Error document.
 
@@ -30,14 +30,14 @@ Publish to S3 bucket:
 
     cd frontend
     npm run build
-    aws2 s3 sync build s3://analytics-poc --profile vwdpeu-iot --region eu-west-1 --acl public-read
+    aws2 s3 sync build s3://dpap-analytics-poc --profile vwdpeu-iot --region eu-west-1 --acl public-read
 
 ## Deploy backend
 
 Prerequisites:
 * Install [aws](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv1.html) or [aws2](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) CLI tool.
 * Install [sam](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html) CLI tool.
-* Make sure the bucket `analytics-poc` exists.
+* Make sure the bucket `dpap-analytics-poc` exists.
 
 Package and deploy changes:
 
@@ -45,12 +45,12 @@ Package and deploy changes:
     sam package \
         --template-file template.yml \
         --output-template-file packaged.yml \
-        --s3-bucket analytics-poc \
+        --s3-bucket dpap-analytics-poc \
         --profile vwdpeu-iot
 
     sam deploy \
         --template-file packaged.yml \
-        --stack-name analytics-poc \
+        --stack-name dpap-analytics-poc \
         --capabilities CAPABILITY_IAM \
         --profile vwdpeu-iot \
         --region eu-west-1
@@ -58,7 +58,7 @@ Package and deploy changes:
 Get the base URL for the API:
 
     aws2 cloudformation describe-stacks \
-        --stack-name analytics-poc \
+        --stack-name dpap-analytics-poc \
         --profile vwdpeu-iot \
         --region eu-west-1 \
         --query 'Stacks[].Outputs'
