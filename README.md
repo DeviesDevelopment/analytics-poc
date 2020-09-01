@@ -1,4 +1,4 @@
-# Analytics POC
+# Analytics without third-party tools
 
 A POC for collecting user behaviour data from any React app using no third-party libraries.
 
