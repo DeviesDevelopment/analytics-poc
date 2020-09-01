@@ -53,6 +53,7 @@ Configuration:
 Publish to S3 bucket:
 
     cd frontend
+    npm ci
     npm run build
     aws2 s3 sync build s3://devies-analytics-poc --region eu-west-1 --acl public-read
 
@@ -66,7 +67,7 @@ Configuration:
 ### Launch frontend locally
 
     cd frontend
-    npm install
+    npm ci
     npm start
 
 ## Learnings
