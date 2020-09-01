@@ -4,6 +4,7 @@ import PageVisits from './pages/PageVisits';
 import Sessions from './pages/Sessions';
 import UserAgents from './pages/UserAgents';
 import TimeSpent from './pages/TimeSpent';
+import PerDay from './pages/PerDay';
 import Analytics from './Analytics';
 import './index.css';
 
@@ -17,6 +18,7 @@ const App = () => {
           <li><Link to="/page-visits">Page Visists</Link></li>
           <li><Link to="/user-agents">User Agents</Link></li>
           <li><Link to="/time-spent">Time Spent</Link></li>
+          <li><Link to="/per-day">Visists Per Day</Link></li>
         </ul>
       </nav>
 
@@ -27,6 +29,7 @@ const App = () => {
         <Route path="/page-visits" component={PageVisits} />
         <Route path="/user-agents" component={UserAgents} />
         <Route path="/time-spent" component={TimeSpent} />
+        <Route path="/per-day" component={PerDay} />
       </Switch>
 
     </div>
