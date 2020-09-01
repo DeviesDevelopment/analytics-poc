@@ -1,10 +1,22 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 
-const iOS = false; // TODO: find out if running on iOS
+function iOS() {
+    return [
+        'iPad Simulator',
+        'iPhone Simulator',
+        'iPod Simulator',
+        'iPad',
+        'iPhone',
+        'iPod',
+    ].includes(navigator.platform)
+    // iPad on iOS 13 detection
+    || (navigator.userAgent.includes('Mac') && 'ontouchend' in document);
+}
 
 const Analytics = () => {
 
+    // Note: It is probably a better idea to use the component state rather than a ref to store events
     const eventsRef = React.useRef([]);
 
     const pushEvent = event => {
@@ -46,7 +58,7 @@ const Analytics = () => {
 
         // Instead, send an async request
         // Except for iOS :(
-        const async = !iOS;
+        const async = !iOS();
         const request = new XMLHttpRequest();
         request.open('POST', url, async); // 'false' makes the request synchronous
         request.setRequestHeader('Content-Type', 'application/json');
@@ -72,7 +84,7 @@ const Analytics = () => {
         window.addEventListener('beforeunload', endSession);
         window.addEventListener('unload', endSession);
         // for iOS when the focus leaves the tab
-        if (iOS) {
+        if (iOS()) {
             window.addEventListener('blur', endSession);
         }
     }, []);
