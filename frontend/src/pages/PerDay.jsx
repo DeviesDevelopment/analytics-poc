@@ -16,7 +16,7 @@ const UserAnalytics = () => {
             <h2>Sessions Per Day</h2>
             <p>Here you see the number of sessions per day during the current month:</p>
             <ul>
-                {sessionsPerDay(analytics).map(sessions => <li key={sessions.day}>{sessions.day}: {sessions.visits}</li>)}
+                {sessionsPerDay(analytics).map(sessions => <li key={sessions.day}>{sessions.day}: {sessions.visits} sessions</li>)}
             </ul>
         </div>
     );

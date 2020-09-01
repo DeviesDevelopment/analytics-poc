@@ -17,7 +17,7 @@ const UserAnalytics = () => {
             <p>These are the User-Agent headers sent by our clients. The data here can be used to find out which devices and browsers that are commonly used to view our site.</p>
             <p>User agents seen this month:</p>
             <ul>
-                {usedBrowsers(analytics).map(userAgent => <li key={userAgent.browser}>{userAgent.browser}: {userAgent.visits}</li>)}
+                {usedBrowsers(analytics).map(userAgent => <li key={userAgent.browser}>{userAgent.browser}: {userAgent.visits} times</li>)}
             </ul>
         </div>
     );

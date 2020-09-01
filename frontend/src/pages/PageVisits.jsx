@@ -19,7 +19,7 @@ const UserAnalytics = () => {
 
             <p>Most visited pages this month:</p>
             <ul>
-                {mostVisitedPage(analytics).map(page => <li key={page.path}>{page.path}: {page.visits}</li>)}
+                {mostVisitedPage(analytics).map(page => <li key={page.path}>{page.path}: {page.visits} visits</li>)}
             </ul>
         </div>
     );
