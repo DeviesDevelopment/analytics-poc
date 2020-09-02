@@ -87,6 +87,7 @@ const Analytics = () => {
         if (iOS()) {
             window.addEventListener('blur', endSession);
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const location = useLocation();
