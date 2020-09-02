@@ -12,7 +12,26 @@ Every time the path changes, an event is stored in the [Analytics](frontend/src/
 
 This means that for every user session, only a single request is sent to the analytics endpoint, making this approach very lightweight.
 
-## Deploy backend
+## Local development
+
+The backend needs to be deployed (see below) for any meaningful data to be displayed when running the application locally.
+
+Configuration:
+* Take the URL retrieved in the final step of backend deployment below and insert into [.env](frontend/.env) (no trailing slash).
+
+### Launch frontend locally
+
+    cd frontend
+    npm ci
+    npm start
+
+## Deployment
+
+Both the backend and frontend are deployed automatically when pushing to the master branch. For this to work, AWS IAM credentials and added to as Github Secrets under the keys `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`.
+
+You can also deploy manually from your local computer as described in the following sections.
+
+### Deploy backend
 
 Prerequisites:
 * Install [aws](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv1.html) or [aws2](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) CLI tool.
@@ -41,7 +60,7 @@ Get the base URL for the API:
         --region eu-west-1 \
         --query 'Stacks[].Outputs'
 
-## Deploy frontend
+### Deploy frontend
 
 Prerequisites:
 * Install [aws](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv1.html) or [aws2](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) CLI tool.
@@ -58,19 +77,6 @@ Publish to S3 bucket:
     npm ci
     npm run build
     aws2 s3 sync build s3://devies-analytics-poc --region eu-west-1 --acl public-read
-
-## Local development
-
-The backend needs to be deployed (see above) for any meaningful data to be displayed when running the application locally.
-
-Configuration:
-* Take the URL retrieved in the final step of backend deployment above and insert into [.env](frontend/.env) (no trailing slash).
-
-### Launch frontend locally
-
-    cd frontend
-    npm ci
-    npm start
 
 ## Learnings
 
