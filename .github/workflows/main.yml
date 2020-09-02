@@ -60,4 +60,5 @@ jobs:
           --template-file packaged.yml \
           --stack-name devies-analytics-poc \
           --capabilities CAPABILITY_IAM \
+          --no-fail-on-empty-changeset \
           --region eu-west-1
